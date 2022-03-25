@@ -27,20 +27,22 @@
         },
         "username": {
           "name": "username",
-          "type": "varchar(255)",
+          "type": "varchar(60)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 60,
           "mappedType": "string"
         },
         "email": {
           "name": "email",
-          "type": "varchar(255)",
+          "type": "varchar(120)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 120,
           "mappedType": "string"
         },
         "password_hash": {
@@ -128,20 +130,22 @@
         },
         "name": {
           "name": "name",
-          "type": "varchar(255)",
+          "type": "varchar(60)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 60,
           "mappedType": "string"
         },
         "description": {
           "name": "description",
-          "type": "varchar(255)",
+          "type": "varchar(3000)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 3000,
           "mappedType": "string"
         },
         "is_disabled": {
@@ -170,15 +174,6 @@
           "primary": false,
           "nullable": false,
           "mappedType": "string"
-        },
-        "member_count": {
-          "name": "member_count",
-          "type": "int",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "mappedType": "integer"
         }
       },
       "name": "category",
@@ -239,20 +234,22 @@
         },
         "title": {
           "name": "title",
-          "type": "varchar(255)",
+          "type": "varchar(100)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 100,
           "mappedType": "string"
         },
         "body": {
           "name": "body",
-          "type": "varchar(255)",
+          "type": "varchar(15000)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 15000,
           "mappedType": "string"
         },
         "is_disabled": {
@@ -357,11 +354,12 @@
         },
         "body": {
           "name": "body",
-          "type": "varchar(255)",
+          "type": "varchar(3000)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "length": 3000,
           "mappedType": "string"
         },
         "is_disabled": {

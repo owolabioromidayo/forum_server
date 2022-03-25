@@ -9,19 +9,19 @@ export class Post {
   @PrimaryKey()
   id!: number;
 
-  @Property()
+  @Property({nullable: false})
   createdAt = new Date();
 
-  @Property()
+  @Property({nullable: false})
   updatedAt = new Date();
 
-  @Property()
+  @Property({nullable: false, length:100})
   title!: string;
 
-  @Property()
+  @Property({nullable: false, length:15000})
   body = "";
 
-  @Property()
+  @Property({nullable: false})
   isDisabled = false;
 
   @ManyToOne(() => Category)

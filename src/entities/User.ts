@@ -14,19 +14,19 @@ export class User {
   @Property()
   createdAt = new Date();
 
-  @Property({unique: true})
+  @Property({unique: true, nullable: false, length:60})
   username!: string;
 
-  @Property({unique: true})
+  @Property({unique: true, nullable: false, length:120})
   email!: string;
 
-  @Property()
+  @Property({nullable: false})
   passwordHash!: string;
 
-  @Property()
+  @Property({nullable: false})
   isDisabled = false;
-
-  @Property()
+  
+  @Property({nullable: false})
   profileImgUrl = "https://i.imgur.com/OQENGf1.jpeg";
 
 

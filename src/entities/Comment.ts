@@ -9,16 +9,16 @@ export class Comment {
   @PrimaryKey()
   id!: number;
 
-  @Property()
+  @Property({nullable: false})
   createdAt = new Date();
 
-  @Property()
+  @Property({nullable: false})
   updatedAt = new Date();
 
-  @Property()
+  @Property({nullable: false, length:3000})
   body = "";
 
-  @Property()
+  @Property({nullable: false})
   isDisabled = false;
 
   @ManyToOne(() => Post, {nullable: true})
