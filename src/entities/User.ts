@@ -5,27 +5,37 @@ import { Comment } from "./Comment";
 import { PostVote } from "./PostVote";
 import { CommentVote } from "./CommentVote";
 
+import { ObjectType, Field } from "type-graphql";
+
+@ObjectType()
 @Entity()
 export class User {
 
+  @Field()
   @PrimaryKey()
   id!: number;
 
+  @Field(() => String)
   @Property()
   createdAt = new Date();
 
+  @Field()
   @Property({unique: true, length:60})
   username!: string;
 
+  @Field()
   @Property({unique: true, length:120})
   email!: string;
+
 
   @Property()
   passwordHash!: string;
 
+  @Field(() => Boolean)
   @Property()
   isDisabled = false;
   
+  @Field(() => String)
   @Property()
   profileImgUrl = "https://i.imgur.com/OQENGf1.jpeg";
 
@@ -55,6 +65,13 @@ export class User {
 
   @OneToMany(() => CommentVote, commentVote => commentVote.user)
   commentVotes = new Collection<PostVote>(this);
+
+
+  constructor(username: string, email: string, passwordHash: string){
+    this.username = username;
+    this.email = email;
+    this.passwordHash = passwordHash;
+  }
 
 
 }

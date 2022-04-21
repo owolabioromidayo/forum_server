@@ -1,5 +1,6 @@
 import express from "express";
 import session from "express-session";
+import cors from "cors";
 
 import connectRedis from "connect-redis";
 import Redis from "ioredis";
@@ -8,6 +9,10 @@ import {MikroORM} from "@mikro-orm/core";
 import microConfig from "./mikro-orm.config";
 
 import {__prod__} from "./constants";
+
+import { ApolloServer } from "apollo-server-express";
+import { buildSchema } from "type-graphql";
+import { UserResolver } from "./resolvers/user";
 
 
 require("dotenv").config();
@@ -19,7 +24,7 @@ console.log(process.env.NODE_ENV);
 declare module 'express-session' {
     export interface SessionData {
       loadedCount: number;
-      userid: string ;
+      userid: number ;
     }
   }``
 
@@ -30,9 +35,8 @@ const main = async() => {
     await orm.getMigrator().up();
 
     const app = express();
-    const router = express.Router();
-
-
+    app.set("trust proxy", 1);
+    app.use( cors());
 
     const redis = new Redis({
         port: Number(process.env.REDIS_PORT),
@@ -44,7 +48,6 @@ const main = async() => {
     const redisStore = new RedisStore({
         client: redis,
     });
-
 
     app.use(
         session({
@@ -63,30 +66,29 @@ const main = async() => {
         } as any)
     );
 
-    app.use(router);
+    const apolloServer = new ApolloServer({
+        schema: await buildSchema({
+          resolvers: [ UserResolver],
+          validate: false,
+        }),
+        context: ({ req, res }) => ({
+          req,
+          res,
+          redis,
+          em : orm.em,
+        }),
+      });
 
-    router.get("/", (req, res, next) => {
-        if (!req.session!.userid){
-            console.log(req.query);
-            req.session!.userid = (req.query as any).userid;
-            console.log(req.session!.userid)
-            console.log("Userid is set");
-            req.session!.loadedCount = 0;
-        } else{
-            req.session!.loadedCount = Number(req.session!.loadedCount) + 1;
-        }
-
-        res.send(
-            `userid: ${req.session!.userid}, loadedCount: 
-            ${req.session!.loadedCount}`
-            );
-    })
-
-
-    app.listen({port : process.env.SERVER_PORT }, () =>{
-        console.log(`Server ready on port ${process.env.SERVER_PORT} `);
-    })
-
+      await apolloServer.start();
+    
+      apolloServer.applyMiddleware({
+        app,
+        cors: false,
+      });
+    
+      app.listen({port: process.env.SERVER_PORT}, () => {
+        console.log(`Server ready on port ${process.env.SERVER_PORT}`);
+      });
 }
 
 main().catch((err) => console.error(err));
