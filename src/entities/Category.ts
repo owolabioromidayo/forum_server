@@ -6,25 +6,25 @@ import { Post } from "./Post";
 @Entity()
 export class Category {
 
-  @PrimaryKey({nullable: false})
+  @PrimaryKey()
   id!: number;
 
-  @Property({nullable: false})
+  @Property()
   createdAt = new Date();
 
-  @Property({unique: true, length:60, nullable:false})
+  @Property({length:60})
   name!: string;
 
-  @Property({nullable: false, length:3000})
+  @Property({length:3000})
   description!: string;
 
-  @Property({nullable: false})
+  @Property()
   isDisabled = false;
 
-  @Property({nullable: false})
+  @Property()
   logoImgUrl = "https://i.imgur.com/OQENGf1.jpeg";
 
-  @Property({nullable: false})
+  @Property()
   bannerImgUrl = "https://i.imgur.com/OQENGf1.jpeg";
 
   @ManyToMany(() => User, user => user.subscriptions)

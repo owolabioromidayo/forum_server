@@ -12,7 +12,7 @@ export class PostVote {
   @PrimaryKey()
   postId!: number;
 
-  @Property({nullable: false})
+  @Property()
   value: number;
 
   @ManyToOne(() => Post, {onDelete: "CASCADE"})

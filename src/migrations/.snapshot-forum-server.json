@@ -180,15 +180,6 @@
       "schema": "public",
       "indexes": [
         {
-          "columnNames": [
-            "name"
-          ],
-          "composite": false,
-          "keyName": "category_name_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
           "keyName": "category_pkey",
           "columnNames": [
             "id"

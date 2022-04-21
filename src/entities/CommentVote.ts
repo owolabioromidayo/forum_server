@@ -12,7 +12,7 @@ export class CommentVote {
   @PrimaryKey()
   commentId!: number;
 
-  @Property({nullable: false})
+  @Property()
   value: number;
 
   @ManyToOne(() => Comment, {onDelete: "CASCADE"})
