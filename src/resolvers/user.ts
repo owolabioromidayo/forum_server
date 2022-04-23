@@ -3,12 +3,10 @@ import {
     Resolver,
     Mutation,
     Arg,
-    Field,
     Ctx,
-    ObjectType,
     Query,
-    // FieldResolver,
-    // Root
+    FieldResolver,
+    Root
   } from "type-graphql";
 
 import { MyContext } from "../types";
@@ -17,35 +15,18 @@ import argon2 from "argon2";
 import {COOKIE_NAME} from "../constants";
 import { UsernamePasswordInput } from "./UsernamePasswordInput";
 import { validateRegister } from "../utils/validateRegister";
-
-
-@ObjectType()
-class FieldError {
-  @Field()
-  field: string;
-  @Field()
-  message: string;
-}
-
-@ObjectType()
-class UserResponse {
-  @Field(() => [FieldError], { nullable: true })
-  errors?: FieldError[];
-
-  @Field(() => User, { nullable: true })
-  user?: User;
-}
+import { UserResponse } from "../types";
 
 
 @Resolver(User)
 export class UserResolver {
-  // @FieldResolver(() => String)
-  // email(@Root() user: User, @Ctx() { req }: MyContext) {
-  //   if (req.session.userid === user.id) {
-  //     return user.email;
-  //   }
-  //   return "";
-  // }
+  @FieldResolver(() => String)
+  email(@Root() user: User, @Ctx() { req }: MyContext) {
+    if (req.session.userid === user.id) {
+      return user.email;
+    }
+    return "";
+  }
 
   @Query(() => User, { nullable: true })
   me(@Ctx() {em, req }: MyContext) {

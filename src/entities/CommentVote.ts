@@ -3,6 +3,7 @@ import { User } from "./User";
 import { Comment } from "./Comment";
 
 
+
 @Entity()
 export class CommentVote {
 
