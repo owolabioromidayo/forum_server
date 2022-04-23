@@ -22,4 +22,11 @@ export class PostVote {
   user: User;
 
 
+  constructor(user: User, post:Post, value: number){
+    this.user = user;
+    this.post = post;
+    this.value = value;
+  }
+
+
 }

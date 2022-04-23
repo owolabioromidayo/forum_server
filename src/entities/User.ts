@@ -23,10 +23,8 @@ export class User {
   @Property({unique: true, length:60})
   username!: string;
 
-  @Field()
   @Property({unique: true, length:120})
   email!: string;
-
 
   @Property()
   passwordHash!: string;
@@ -72,6 +70,5 @@ export class User {
     this.email = email;
     this.passwordHash = passwordHash;
   }
-
 
 }

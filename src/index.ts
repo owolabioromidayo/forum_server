@@ -13,6 +13,7 @@ import {__prod__} from "./constants";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { UserResolver } from "./resolvers/user";
+import { PostResolver } from "./resolvers/post";
 
 
 require("dotenv").config();
@@ -68,7 +69,7 @@ const main = async() => {
 
     const apolloServer = new ApolloServer({
         schema: await buildSchema({
-          resolvers: [ UserResolver],
+          resolvers: [ UserResolver, PostResolver],
           validate: false,
         }),
         context: ({ req, res }) => ({
